@@ -17,8 +17,8 @@ AS726X sensor;//Creates the sensor object
 #ifndef APSSID
 //#define APSSID "NIR Spectral Sensor"
 //#define APPSK  "1234567890"
-#define APSSID "PLDTHOMEDSL_Rumple/Aya"
-#define APPSK  "misaku1212"
+#define APSSID "tap-IT"
+#define APPSK  "tap-it#now"
 #endif
 
 /* Set these to your desired credentials. */
@@ -69,6 +69,7 @@ void setup() {
   // put your setup code here, to run once:
 
   pinMode(pin_led, OUTPUT);
+  pinMode(16, INPUT_PULLUP);
   Serial.begin(115200);
   //setting up NIR
   Wire.begin(4, 5);
@@ -206,7 +207,7 @@ void setup() {
   webSocket.begin();
   webSocket.onEvent(webSocketEvent);
   Serial.println();
-  Serial.println(F("\HTTP server started"));
+  Serial.println(F("HTTP server started"));
 }
 //void handleNotFound()
 //{
@@ -215,6 +216,9 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   webSocket.loop();
+  if(digitalRead(16) == LOW ){
+    scan('*');
+    }
 
   //  server.handleClient();
   //  if(Serial.available() > 0){
@@ -283,7 +287,7 @@ void scan(char args) {
   spectral.tempC = spectral.tempC / setting.sampling;
   String spectral_data;
   if (args == '*') {
-    spectral_data= "{\"Ch1\":" + String(spectral._610nm) + ",\"Ch2\":" + String(spectral._680nm) + ",\"Ch3\":" + String(spectral._730nm) + ",\"Ch4\":" + String(spectral._780nm) + ",\"Ch5\":" + String(spectral._810nm) + ",\"Ch6\":" + String(spectral._860nm) + ",\"TempC\":" + String(spectral.tempC) + ",\"dist\":\"predicting\"}";
+    spectral_data = "{\"Ch1\":" + String(spectral._610nm) + ",\"Ch2\":" + String(spectral._680nm) + ",\"Ch3\":" + String(spectral._730nm) + ",\"Ch4\":" + String(spectral._780nm) + ",\"Ch5\":" + String(spectral._810nm) + ",\"Ch6\":" + String(spectral._860nm) + ",\"TempC\":" + String(spectral.tempC) + ",\"dist\":\"predicting\"}";
   } else {
     spectral_data = "{\"Ch1\":" + String(spectral._610nm) + ",\"Ch2\":" + String(spectral._680nm) + ",\"Ch3\":" + String(spectral._730nm) + ",\"Ch4\":" + String(spectral._780nm) + ",\"Ch5\":" + String(spectral._810nm) + ",\"Ch6\":" + String(spectral._860nm) + ",\"TempC\":" + String(spectral.tempC) + ",\"dist\":\"labeling\"}";
   }
