@@ -349,8 +349,11 @@ const xhttp = new XMLHttpRequest();
         };
         window.onload = function () {
 
+            localStorage.setItem("username", "admin");
+            localStorage.setItem("password", "admin");
+
             load_setting();
-            connect();
+            //connect();
             if (typeof (Storage) != "undefined") {
                 if (localStorage.getItem("username") || sessionStorage.getItem("username")) {
                     document.getElementById('login_tab').style.display = 'none';
@@ -359,6 +362,7 @@ const xhttp = new XMLHttpRequest();
                     document.getElementById('data_tab').style.display = 'block';
                     document.getElementById('scan_tab').style.display = 'block';
                     document.getElementById('terminal_tab').style.display = 'block';
+                    document.getElementById('labeling_tab').style.display = 'block';
                     document.getElementById('setting_tab').style.display = 'block';
                     document.getElementById('logout_tab').style.display = 'block';
                     document.getElementById('non_member').style.display = 'none';
@@ -368,9 +372,11 @@ const xhttp = new XMLHttpRequest();
                     document.getElementById('report_tab').style.display = 'none';
                     document.getElementById('data_tab').style.display = 'none';
                     document.getElementById('scan_tab').style.display = 'none';
+                    document.getElementById('labeling_tab').style.display = 'none';
                     document.getElementById('terminal_tab').style.display = 'none';
                     document.getElementById('logout_tab').style.display = 'none';
                     document.getElementById('setting_tab').style.display = 'none';
+                    document.getElementById('non_member').style.display = "block";
                 }
             }
             //HOME MAIN Chart
